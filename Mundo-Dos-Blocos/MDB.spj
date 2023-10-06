@@ -16,10 +16,9 @@ sobre(k,i).
 sobre(e,k).
 sobre(u,k).
 
+sobre(X,Y) :- sobre(Z,Y), sobre(X,Z).
 
 livre(X):- not(sobre(_,X)).
-
-sobre(X,Y) :- sobre(Z,Y), sobre(X,Z).
 
 abaixo(X,Y) :- sobre(Y,X).
 

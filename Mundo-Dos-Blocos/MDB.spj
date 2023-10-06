@@ -1,0 +1,40 @@
+bloco(a).
+bloco(d).
+bloco(e).
+bloco(u).
+triangulo(b).
+retangulo(c).
+retangulo(k).
+circulo(j).
+circulo(i).
+
+sobre(c,a). % construindo uma ponte.
+sobre(c,d).
+
+sobre(k,j). % construindo um carro 2d.
+sobre(k,i).
+sobre(e,k).
+sobre(u,k).
+
+
+livre(X):- not(sobre(_,X)).
+
+sobre(X,Y) :- sobre(Z,Y), sobre(X,Z).
+
+abaixo(X,Y) :- sobre(Y,X).
+
+abaixo(X,Y) :- sobre(Y, Z), sobre(Z, X).
+
+ponte(X) :- sobre(X, Y), sobre(X, Z), Y \= Z, retangulo(X), bloco(Y), bloco(Z).
+
+carro(X) :- sobre(X, Y), sobre(X, Z), sobre(I,X), sobre(J,X), Y \= Z, I \= J,
+								retangulo(X), circulo(Y), circulo(Z),
+								bloco(I), bloco(J).
+
+
+
+?- ponte(X), write(X), write(" é uma ponte"), nl, sobre(A,Y), 
+					write("A figura "),write(A), write(" está sobre --> "), 
+					write(Y), nl, 
+					abaixo(B,C), write("A figura "),
+					write(B), write(" está abaixo de --> "),write(C), nl.

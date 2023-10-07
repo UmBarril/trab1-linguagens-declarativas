@@ -1,23 +1,19 @@
 bloco(a).
 bloco(d).
-bloco(e).
-bloco(u).
 triangulo(b).
 retangulo(c).
-retangulo(k).
-circulo(j).
-circulo(i).
 
 sobre(c,a). % construindo uma ponte.
 sobre(c,d).
 
-sobre(k,j). % construindo um carro 2d.
-sobre(k,i).
-sobre(e,k).
-sobre(u,k).
+sobre(a,d). % construíndo a torre.
+sobre(b, a).
 
+							
 sobre(X,Y) :- sobre(Z,Y), sobre(X,Z).
 
+sobre_superficie(X) :- not(sobre(X,_)). 
+    
 livre(X):- not(sobre(_,X)).
 
 abaixo(X,Y) :- sobre(Y,X).
@@ -26,11 +22,8 @@ abaixo(X,Y) :- sobre(Y, Z), sobre(Z, X).
 
 ponte(X) :- sobre(X, Y), sobre(X, Z), Y \= Z, retangulo(X), bloco(Y), bloco(Z).
 
-carro(X) :- sobre(X, Y), sobre(X, Z), sobre(I,X), sobre(J,X), Y \= Z, I \= J,
-								retangulo(X), circulo(Y), circulo(Z),
-								bloco(I), bloco(J).
-
-
+torre(X) :- sobre_superficie(Y), sobre(X, Y), sobre(W, X), 
+									bloco(X), bloco(Y), triangulo(W).
 
 ?- ponte(X), write(X), write(" é uma ponte"), nl, sobre(A,Y), 
 					write("A figura "),write(A), write(" está sobre --> "), 

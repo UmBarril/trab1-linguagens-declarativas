@@ -23,7 +23,7 @@ abaixo(X,Y) :- sobre(Y, Z), sobre(Z, X).
 ponte(X) :- sobre(X, Y), sobre(X, Z), Y \= Z, retangulo(X), bloco(Y), bloco(Z).
 
 torre(X) :- sobre_superficie(Y), sobre(X, Y), sobre(W, X), 
-									bloco(X), bloco(Y), triangulo(W).
+							bloco(X), bloco(Y), triangulo(W).
 
 ?- ponte(X), write(X), write(" é uma ponte"), nl, sobre(A,Y), 
 					write("A figura "),write(A), write(" está sobre --> "), 

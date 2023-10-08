@@ -1,67 +1,63 @@
 bloco(a).
 bloco(d).
-bloco(e).
-bloco(u).
+bloco(j).
+bloco(k).
 triangulo(b).
+triangulo(o).
 retangulo(c).
-retangulo(k).
-circulo(j).
-circulo(i).
+retangulo(f).
 
-sobre(c,a). % construindo uma ponte.
-sobre(c,d).
+sobre(c, a). % construindo uma ponte.
+sobre(c, d).
+sobre(a, superficie).
+sobre(d, superficie).
 
-sobre(k,j). % construindo um carro 2d.
-sobre(k,i).
-sobre(e,k).
-sobre(u,k).
+sobre(k, superficie). % construíndo a torre.
+sobre(j, k).
+sobre(b, j).
 
+sobre(f, superficie).
+							
+sobre(X,Y) :- X \= Y, sobre(Z,Y), sobre(X,Z).
 
-livre(X):- not(sobre(_,X)).
-
-sobre(X,Y) :- sobre(Z,Y), sobre(X,Z).
+%tentativa de fazer um predicado que atribuísse que uma figura
+%estivesse sobre a superficie dado algumas circunstâncias.
+%sobre(X, superficie) :- X \= Y, Y = superficie, sobre(X,Y). 
+    
+livre(X):- sobre(_,X).
 
 abaixo(X,Y) :- sobre(Y,X).
 
 abaixo(X,Y) :- sobre(Y, Z), sobre(Z, X).
 
-ponte(X) :- sobre(X, Y), sobre(X, Z), Y \= Z, retangulo(X), bloco(Y), bloco(Z).
+ponte(X) :- sobre(X, Y), sobre(X, Z), Y \= Z, retangulo(X), bloco(Y), bloco(Z),
+									write("["), write(X), write(Y), 
+									write(Z), write("] "), nl. 
+									% mostra todas as figuras envolvidas na ponte
 
-carro(X) :- sobre(X, Y), sobre(X, Z), sobre(I,X), sobre(J,X), Y \= Z, I \= J,
-								retangulo(X), circulo(Y), circulo(Z),
-								bloco(I), bloco(J).
+torre(X) :- sobre(X, Y), sobre(W, X), bloco(X), bloco(Y), triangulo(W).
 
+carro(X) :- sobre(X, Y), sobre(X, Z), sobre(I, X), Y \= Z, I \= X,
+				retangulo(X), retangulo(I), circulo(Y), circulo(Z).
 
+% Inferência para mostrar todas as figuras 
+%?- sobre(X, superficie), write(X), nl.
 
-?- ponte(X), write(X), write(" é uma ponte"), nl, sobre(A,Y), 
-					write("A figura "),write(A), write(" está sobre --> "), 
-					write(Y), nl, 
-					abaixo(B,C), write("A figura "),
-					write(B), write(" está abaixo de --> "),write(C), nl.
-
-?- casa(X), write(X), write(" é uma casa"), nl, sobre(A,Y), 
-					write("A figura "),write(A), write(" está sobre --> "), 
-					write(Y), nl, 
-					abaixo(B,C), write("A figura "),
-					write(B), write(" está abaixo de --> "),write(C), nl.
-
-?- torre(X), write(X), write(" é uma torre"), nl, sobre(A,Y), 
-					write("A figura "),write(A), write(" está sobre --> "), 
-					write(Y), nl, 
-					abaixo(B,C), write("A figura "),
-					write(B), write(" está abaixo de --> "),write(C), nl.
+%Inferência para mostrar todas as figuras livres
+?- livre(X).
 
 
+%?- torre(_), write(" é uma torre"), nl, sobre(B,C), 
+%					write("A figura "),write(B), write(" está sobre --> "), 
+%					write(C), nl, 
+%					abaixo(H,L), write("A figura "),
+%					write(H), write(" está abaixo de --> "),write(L), nl.
 
-ponte(X) :- sobre(X, Y), sobre(X, Z), Y \= Z, retangulo(X), bloco(Y), bloco(Z).
 
-casa(X) :- sobre(X, Y), sobre(X, Z), sobre(I,X), sobre(J,X), Y \= Z, I \= J,
-								retangulo(X), circulo(Y), circulo(Z),
-								bloco(I), bloco(J),
-								sobre(I,T), sobre(T,J).
+%?- ponte(X), sobre(A,Y), write(A), write(" está sobre "), 
+%					write(Y), nl, abaixo(B,C),
+%					write(B), write(" está abaixo de "),write(C), nl.
 
-torre(X) :- sobre(X, Y), sobre(X, Z), sobre(I,X), sobre(J,X), Y \= Z, I \= J,
-								retangulo(X), circulo(Y), circulo(Z),
-								bloco(I), bloco(J),
-								sobre(I,T), sobre(T,J),
-								sobre(I,K), sobre(K,T), sobre(K,J).
+%?- carro(X), write("O objeto "), write(X), write(" é um carro."), nl,
+%   sobre(A, Y), write(A), write(" está sobre "), write(Y), nl,
+%   abaixo(B, C), write(B), write(" está abaixo de "), write(C), nl.

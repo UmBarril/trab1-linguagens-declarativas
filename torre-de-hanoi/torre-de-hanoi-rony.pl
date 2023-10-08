@@ -17,12 +17,12 @@ hanoi(N, Origem, Destino, Auxiliar) :-
 iniciar_hanoi(N) :-
     hanoi(N, pino1, pino3, pino2).
 
+
 % Exemplo de uso:
 % Para resolver o jogo da Torre de Hanoi com 3 discos, você pode chamar:
 % iniciar_hanoi(3).
-% xxxxxxxxxxxxxxxxxxx 
-% xxxxxxxxxxxxxxxxxxx 
-% xxxxxxxxxxxxxxxxxxx 
+
+
 % Definindo as regras do jogo:
 % 
 % A descrição do jogo da Torre de Hanoi é fornecida no enunciado, onde você tem três pinos (pino1, pino2 e pino3) e precisa mover discos de um pino para outro, seguindo a regra de que um disco maior nunca pode ficar em cima de um disco menor.
@@ -43,11 +43,11 @@ iniciar_hanoi(N) :-
 % 
 % Caso Recursivo: Quando N é maior que 1, o predicado é chamado recursivamente três vezes:
 
-hanoi(M, Origem, Auxiliar, Destino) % Move os M-1 discos superiores da origem para o pino auxiliar usando o destino como auxílio.
+%hanoi(M, Origem, Auxiliar, Destino) % Move os M-1 discos superiores da origem para o pino auxiliar usando o destino como auxílio.
 
-hanoi(1, Origem, Destino, _) % Move o disco restante da origem para o destino.
+%hanoi(1, Origem, Destino, _) % Move o disco restante da origem para o destino.
 
-hanoi(M, Auxiliar, Destino, Origem) % Move os M-1 discos superiores do pino auxiliar para o destino usando a origem como auxílio.
+%hanoi(M, Auxiliar, Destino, Origem) % Move os M-1 discos superiores do pino auxiliar para o destino usando a origem como auxílio.
 
 % A recursão continua até que N seja reduzido a 1, e a partir desse ponto, os discos são movidos da origem para o destino, obedecendo às regras do jogo.
 

@@ -5,6 +5,7 @@ bloco(k).
 triangulo(b).
 triangulo(o).
 retangulo(c).
+retangulo(f).
 
 sobre(c, a). % construindo uma ponte.
 sobre(c, d).
@@ -14,6 +15,8 @@ sobre(d, superficie).
 sobre(k, superficie). % construíndo a torre.
 sobre(j, k).
 sobre(b, j).
+
+sobre(f, superficie).
 							
 sobre(X,Y) :- X \= Y, sobre(Z,Y), sobre(X,Z).
 
@@ -38,29 +41,33 @@ ponte(X) :- sobre(X, Y), sobre(X, Z), Y \= Z,
 							% mostra todas as figuras envolvidas 
 							%na ponte
 
-torre(X) :- sobre(X, Y), sobre(W, X), bloco(X), bloco(Y), triangulo(W).
+torre(X) :- sobre(X, Y), sobre(W, X), bloco(X), bloco(Y), triangulo(W)
+						,write("["), write(X), write(Y), 
+						write(W), write("] "), nl.
 						%predicado pra construir a torre.
 
 carro(X) :- sobre(X, Y), sobre(X, Z), sobre(I, X), Y \= Z, I \= X,
-				retangulo(X), retangulo(I), circulo(Y), circulo(Z).
+				retangulo(X), retangulo(I), circulo(Y), circulo(Z)
+				, write("["), write(X), write(I), 
+							write(Y), write(Z),write("] "), nl.
 					%predicado pra construir a figura de carro
 
 
 % Inferência para mostrar todas as figuras 
-%?- sobre(X, superficie), write(X), nl.
+?- sobre(X, superficie), write(X), nl.
 
 %Inferência para mostrar todas as figuras livres
 ?- livre(X), write(X).
 
 %Inferência pra mostrar as figuras 
 %envolvidas na torre, quem está abaixo de quem etc.
-%?- torre(_), write(" é uma torre"), nl, sobre(B,C), 
-%					write("A figura "),write(B), write(" está sobre --> "), 
-%					write(C), nl, 
-%					abaixo(H,L), write("A figura "),
-%					write(H), write(" está abaixo de --> "),write(L), nl.
+?- torre(_), write(" é uma torre"), nl, sobre(B,C), 
+					write("A figura "),write(B), write(" está sobre --> "), 
+					write(C), nl, 
+					abaixo(H,L), write("A figura "),
+					write(H), write(" está abaixo de --> "),write(L), nl.
 
 %Mesma coisa aqui, mas pra ponte
-%?- ponte(X), sobre(A,Y), write(A), write(" está sobre "), 
-%					write(Y), nl, abaixo(B,C),
-%					write(B), write(" está abaixo de "),write(C), nl.
+?- ponte(X), sobre(A,Y), write(A), write(" está sobre "), 
+					write(Y), nl, abaixo(B,C),
+					write(B), write(" está abaixo de "),write(C), nl.

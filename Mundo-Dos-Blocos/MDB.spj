@@ -5,7 +5,6 @@ bloco(k).
 triangulo(b).
 triangulo(o).
 retangulo(c).
-retangulo(f).
 
 sobre(c, a). % construindo uma ponte.
 sobre(c, d).
@@ -15,31 +14,29 @@ sobre(d, superficie).
 sobre(k, superficie). % construíndo a torre.
 sobre(j, k).
 sobre(b, j).
-
-sobre(f, superficie).
 							
 sobre(X,Y) :- X \= Y, sobre(Z,Y), sobre(X,Z).
 
 %uma tentativa de fazer um predicado que atribuísse que uma figura
-estivesse sobre a superficie dado algumas circunstâncias
+%estivesse sobre a superficie dado algumas circunstâncias
 %sobre(X, superficie) :- X \= Y, Y = superficie, sobre(X,Y). 
     
-livre(X):- not(sobre(_,X)).
+%livre(X):- Y \= X, not(sobre(Y,X)).
 %a ideia é que uma figura X esteja livre 
-se ela não tem nenhuma outra figura sobre ela
+%se ela não tem nenhuma outra figura sobre ela
 
 abaixo(X,Y) :- sobre(Y,X). %X está abaixo de Y se Y está sobre X
 
 abaixo(X,Y) :- sobre(Y, Z), sobre(Z, X). 
 %mesma coisa aqui, só que é X abaixo de Y 
-se Y está em cima de Z e Z está sobre X
+%se Y está em cima de Z e Z está sobre X
 
 ponte(X) :- sobre(X, Y), sobre(X, Z), Y \= Z, 
 							retangulo(X), bloco(Y), bloco(Z),
 							write("["), write(X), write(Y), 
 							write(Z), write("] "), nl. 
 							% mostra todas as figuras envolvidas 
-							na ponte
+							%na ponte
 
 torre(X) :- sobre(X, Y), sobre(W, X), bloco(X), bloco(Y), triangulo(W).
 						%predicado pra construir a torre.
@@ -53,10 +50,10 @@ carro(X) :- sobre(X, Y), sobre(X, Z), sobre(I, X), Y \= Z, I \= X,
 %?- sobre(X, superficie), write(X), nl.
 
 %Inferência para mostrar todas as figuras livres
-%?- livre(X).
+?- livre(X), write(X).
 
 %Inferência pra mostrar as figuras 
-envolvidas na torre, quem está abaixo de quem etc.
+%envolvidas na torre, quem está abaixo de quem etc.
 %?- torre(_), write(" é uma torre"), nl, sobre(B,C), 
 %					write("A figura "),write(B), write(" está sobre --> "), 
 %					write(C), nl, 
